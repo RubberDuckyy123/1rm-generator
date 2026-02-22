@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>1-RM Generator</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8">
+        <meta name="theme-color" content="#d6d6d6">
+        <link rel="stylesheet" href="awesomeStyle.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Faustina:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+        <link rel="manifest" href="/manifest.json">
+        <script type="module" src="awesomeScript.js" defer></script>
+    </head>
+    <body>
+        <h1 id="TitleText">1RM Generator</h1>
+        <div class="AllWorkoutInfo">
+            <div class="WorkoutInfo">
+                <h2 class="WorkoutLabel">GENDER:</h2>
+                <select id="GenderSelect" class="WorkoutDropdown">
+                    <option>Male</option>
+                    <option>Female</option>
+                </select>
+            </div>
+            <div class="MainInfoContainer">
+                <div class="WorkoutInfo">
+                    <h2 class="WorkoutLabel">AGE:</h2>
+                    <input id="AgeInput" class="WorkoutInput" type="number">
+                </div>
+                <div class="WorkoutInfo">
+                    <h2 class="WorkoutLabel">WEIGHT:</h2>
+                    <input id="WeightInput" class="WorkoutInput" type="number">
+                </div>
+                <div class="WorkoutInfo">
+                    <h2 class="WorkoutLabel">LOAD:</h2>
+                    <input id="LoadInput" class="WorkoutInput" type="number">
+                </div>
+                <div class="WorkoutInfo">
+                    <h2 class="WorkoutLabel">REPS:</h2>
+                    <input id="RepsInput" class="WorkoutInput" type="number">
+                </div>
+            </div>
+            <div class="WorkoutInfo">
+                <h2 class="WorkoutLabel">EXERCISE:</h2>
+                <select class="WorkoutDropdown" id="ExerciseSelect">
+                    <option data-type="Weight">Bench Press</option>
+                    <option data-type="Weight">Deadlift</option>
+                    <option data-type="Weight">Squat</option>
+                    <option data-type="Weight">Overhead Press</option>
+                    <option data-type="Bodyweight" data-bw="0.70">Push Ups</option>
+                    <option data-type="Bodyweight" data-bw="1.0">Chin Ups</option>
+                    <option data-type="Bodyweight" data-bw="0.967">Dips</option>
+                </select>
+            </div>
+        </div>
+        <div id="MeasureUnitContainer">
+            <h2>Measurement Unit:</h2>
+            <select id="UnitSelect">
+                <option>lbs</option>
+                <option>kgs</option>
+            </select>
+        </div>
+        <button id="CalculateButton">CALCULATE</button>
+        <h3 class="BuildUpText" id="ScoreBuildup"></h3>
+        <h1 class="Result" id="OneRMResult"></h1>
+        <h3 class="BuildUpText" id="RankBuildup"></h3>
+        <h1 class="Result" id="RankingResult"></h1>
+        <h3 id="CreditText">Made by <i><strong>Ty Habermehl</strong></i></h3>
+    </body>
+</html>
