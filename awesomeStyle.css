@@ -19,7 +19,7 @@ body {
     margin-top: 20px;
     margin-bottom: 24px;
     font-family: "BBH Bogle", sans-serif;
-    font-weight: 395;
+    font-weight: 400;
 }
 
 .AllWorkoutInfo {
@@ -75,7 +75,7 @@ body {
     font-size: 2rem;
     margin: 10px;
     font-family: "BBH Bogle", sans-serif;
-    font-weight: 385;
+    font-weight: 400;
 }
 
 #MeasureUnitContainer {
@@ -106,7 +106,7 @@ body {
     margin-bottom: 25px;
     font-size: 2.75rem;
     font-family: "BBH Bogle", sans-serif;
-    font-weight: 400;;
+    font-weight: 400;
     transition: transform 0.1s ease, background-color 0.1s ease;
     cursor: pointer;
 }
@@ -147,5 +147,5 @@ body {
     margin-bottom: 0;
     font-family: "Faustina", serif;
     font-weight: normal;
-
 }
+
