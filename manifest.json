@@ -1,21 +1,22 @@
 {
     "name": "1RM Generator",
     "short_name": "1RM Generator",
-    "start_url": "/",
+    "start_url": "/1rm-generator/",
     "display": "standalone",
     "background_color": "#d6d6d6",
     "theme_color": "#d6d6d6",
     "orientation": "portrait",
     "icons": [
         {
-        "src": "/Icons/SmallIcon.png",
+        "src": "Icons/SmallIcon.png",
         "sizes": "192x192",
         "type": "image/png"
         },
         {
-        "src": "/Icons/BigIcon.png",
+        "src": "Icons/BigIcon.png",
         "sizes": "512x512",
         "type": "image/png"
         }
     ]
+
 }
