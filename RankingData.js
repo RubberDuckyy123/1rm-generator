@@ -15,7 +15,6 @@ export const EXERCISEINFO = {
                 Novice: {min: 0.5, max: 0.75},
                 Intermediate: {min: 0.75, max: 1.0},
                 Advanced: {min: 1.0, max: 1.25},
-                Elite: {min: 1.25, max: 1.5}
             },
             BenchPress: {
                 Novice: {min: 0.9, max: 1.2},
@@ -92,4 +91,5 @@ export const EXERCISEINFO = {
             }
         }
     }
+
 }
