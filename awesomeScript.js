@@ -49,7 +49,7 @@ function GetRanking(OneRM, Exercise, ExerciseType, Gender, AgeMultiplier) {
             return "Beginner"
         }
 
-        for (let i = 0; i < levels.length - 1; i++) {
+        for (let i = 0; i < levels.length; i++) {
             const level = levels[i]
             const min = Math.round(ExerciseData[level].min * Weight * AgeMultiplier)
             const max = Math.round(ExerciseData[level].max * Weight * AgeMultiplier)
@@ -67,7 +67,7 @@ function GetRanking(OneRM, Exercise, ExerciseType, Gender, AgeMultiplier) {
             return "Beginner"
         }
 
-        for (let i = 0; i < levels.length - 1; i++) {
+        for (let i = 0; i < levels.length; i++) {
             const level = levels[i]
             const min = Math.round(ExerciseData[level].min * AgeMultiplier)
             const max = Math.round(ExerciseData[level].max * AgeMultiplier)
@@ -117,4 +117,5 @@ if ("serviceWorker" in navigator) {
             console.error("Service Worker failed:", err);
         });
     });
+
 }
