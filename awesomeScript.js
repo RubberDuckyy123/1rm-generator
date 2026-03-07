@@ -1,6 +1,7 @@
-import { AGEMULTIPLERS, EXERCISEINFO } from "./RankingData.js"
+import { AGEMULTIPLERS, ONERMEXERCISEINFO, PERFORMMETRICSINFO } from "./RankingData.js"
 
-const GenderSelect = document.getElementById("GenderSelect")
+const OneRMGenderSelect = document.getElementById("OneRMMetricsGenderSelect")
+const MetricsGenderSelect = document.getElementById("MetricsMetricsGenderSelect")
 
 const LoadInput = document.getElementById("LoadInput")
 const RepsInput = document.getElementById("RepsInput")
@@ -11,7 +12,7 @@ const ExerciseSelect = document.getElementById("ExerciseSelect")
 
 const MeasurementUnit = document.getElementById("UnitSelect")
 
-const CalculateButton = document.getElementById("CalculateButton")
+const CalculateButtons = document.querySelectorAll(".CalculateButton")
 
 const OneRMBuildup = document.getElementById("ScoreBuildup")
 const RankBuildup = document.getElementById("RankBuildup")
@@ -19,9 +20,135 @@ const RankBuildup = document.getElementById("RankBuildup")
 const OneRMResultText = document.getElementById("OneRMResult")
 const RankingResultText = document.getElementById("RankingResult")
 
+const PerformMetricsInfo = document.querySelectorAll(".PerformMetricInfo")
+
+const RankTemplate = document.getElementById("ExerciseRankTemplate")
+const Results = document.getElementById("Results")
+const ResultsContainer = document.getElementById("ResultsContainer")
+
+const MenuOptions = document.querySelectorAll(".MenuOption")
+const MenuOptionsContainer = document.getElementById("MenuOptions")
+
 const ONERMFORMULAS = {
     Weight: (Load, Reps) => Number((Load * Reps * 0.033 + Load).toFixed(1)),
     Bodyweight: (Load, Reps, bw) => Number(((bw * Load) * (1 + 0.033 * Reps)).toFixed(1))
+}
+
+let OneRM
+let AgeMultiplier
+
+const ONERMRANKINGINFO = {
+    Weight: {
+        DataMultiplier: (AgeMultiplier) => Number(WeightInput.value) * AgeMultiplier,
+        Comparer: () => OneRM
+    },
+    Bodyweight: {
+        DataMultiplier: (AgeMultiplier) => AgeMultiplier,
+        Comparer: () => Number(RepsInput.value)
+    }
+}
+
+function EvaluatePerformance(mode) {
+    if (mode == "OneRMCalculateButton") {
+
+        CalculateOneRM()
+
+        OneRMBuildup.textContent = "Your 1RM is:"
+        RankBuildup.textContent = "You're:"
+
+        OneRMResultText.textContent = String(OneRM) + MeasurementUnit.selectedOptions[0].value
+
+        const Gender = OneRMGenderSelect.selectedOptions[0].value
+        const Exercise = ExerciseSelect.selectedOptions[0].value.replace(/\s/g,  "")
+        const ExerciseType = ExerciseSelect.selectedOptions[0].dataset.type
+
+        const ExerciseData = ONERMEXERCISEINFO[Gender][ExerciseType][Exercise]
+
+        if (IsBeginner(ExerciseType, ExerciseData.Novice, AgeMultiplier)) {
+            RankingResultText.textContent = "Beginner!"
+            return
+        }
+    
+        const levels = Object.keys(ExerciseData)
+        const Comparer = ONERMRANKINGINFO[ExerciseType].Comparer()
+        const DataMultiplier = ONERMRANKINGINFO[ExerciseType].DataMultiplier(AgeMultiplier)
+
+        for (let i = 0; i < levels.length; i++) {
+            const level = levels[i]
+            const min = Math.round(ExerciseData[level].min * DataMultiplier)
+            const max = Math.round(ExerciseData[level].max * DataMultiplier)
+            if (Comparer >= min && Comparer <= max) {
+                RankingResultText.textContent = levels[i]
+                return
+            }
+        }
+        RankingResultText.textContent = "Elite!"
+
+    } else {
+
+        Results.innerHTML = ""
+        ResultsContainer.classList.remove("NotRendered")
+        PerformMetricsInfo.forEach( (InputBox) => {
+            
+            let InputValue
+            if (InputBox.dataset.inputtype == "distance") {
+                InputValue = FeetToInches(InputBox.value)
+            } else {
+                InputValue = Number(InputBox.value)
+            }
+            
+            if (isNaN(InputValue) || InputValue == "") {
+                return
+            }
+
+            const ExerciseData = PERFORMMETRICSINFO[MetricsGenderSelect.selectedOptions[0].value][InputBox.dataset.name]
+
+            const levels = Object.keys(ExerciseData)
+
+            for (let i = 0; i < levels.length; i++) {
+                const level = levels[i]
+                const min = ExerciseData[level].min
+                const max = ExerciseData[level].max
+                if (InputValue >= min && InputValue <= max) {
+                    ShowExerciseRank(InputBox.dataset.shortname, level)
+                    return
+                }
+            }
+            ShowExerciseRank(InputBox.dataset.shortname, "Elite")
+        })
+    }
+}
+
+function CalculateOneRM() {
+    const SelectedOption = ExerciseSelect.selectedOptions[0]
+    const Reps = Number(RepsInput.value)
+    AgeMultiplier = GetAgeMultiplier()
+    const Load = Number(LoadInput.value)
+
+    if (Reps == 1) {
+        OneRM = Load
+        AgeMultiplier = 1
+    } else {
+        OneRM = ONERMFORMULAS[SelectedOption.dataset.type](Load, Reps, SelectedOption.dataset.bw)
+    }
+}
+
+function IsBeginner(ExerciseType, Novice, AgeMultiplier) {
+    let Comparer
+    let MINmin
+    if (ExerciseType == "Weight") {
+        Comparer = OneRM
+        const Weight = Number(WeightInput.value)
+        MINmin = Math.round(Novice.min * Weight * AgeMultiplier)
+    } else {
+        Comparer = Number(RepsInput.value)
+        MINmin = Math.round(Novice.min * AgeMultiplier)
+    }
+
+    if (Comparer < MINmin) {
+        return true
+    }
+    return false
 }
 
 function GetAgeMultiplier() {
@@ -32,78 +159,51 @@ function GetAgeMultiplier() {
             return AGEMULTIPLERS[i].percent
         }
     }
-
     return 1
 }
 
-function GetRanking(OneRM, Exercise, ExerciseType, Gender, AgeMultiplier) {
-    const ExerciseData = EXERCISEINFO[Gender][ExerciseType][Exercise]
-    const levels = Object.keys(ExerciseData)
+function FeetToInches(input) {
+    const parts = input.trim().split(/['"]/).filter(p => p !== "");
 
-    if (ExerciseType == "Weight") {
+    let feet = 0;
+    let inches = 0;
 
-        const Weight = Number(WeightInput.value)
-        const MINmin = Math.round(ExerciseData.Novice.min * Weight * AgeMultiplier)
-
-        if (OneRM < MINmin) {
-            return "Beginner"
-        }
-
-        for (let i = 0; i < levels.length; i++) {
-            const level = levels[i]
-            const min = Math.round(ExerciseData[level].min * Weight * AgeMultiplier)
-            const max = Math.round(ExerciseData[level].max * Weight * AgeMultiplier)
-            if (OneRM >= min && OneRM <= max) {
-                return levels[i]
-            }
-        }
-
-    } else {
-
-        const Reps = Number(RepsInput.value)
-        const MINmin = Math.round(ExerciseData.Novice.min * AgeMultiplier)
-
-        if (Reps < MINmin) {
-            return "Beginner"
-        }
-
-        for (let i = 0; i < levels.length; i++) {
-            const level = levels[i]
-            const min = Math.round(ExerciseData[level].min * AgeMultiplier)
-            const max = Math.round(ExerciseData[level].max * AgeMultiplier)
-            if (Reps >= min && Reps <= max) {
-                return levels[i]
-            }
-        }
+    if (parts.length === 2) {
+        feet = Number(parts[0]);
+        inches = Number(parts[1]);
+    } 
+    else if (parts.length === 1) {
+        inches = Number(parts[0]) * 12;
     }
-    return "Elite"
+
+    return (feet * 12) + inches;
 }
 
-CalculateButton.addEventListener("click", () => {
-    const SelectedOption = ExerciseSelect.selectedOptions[0]
-    const Reps = Number(RepsInput.value)
-    let OneRM
-    let AgeMultiplier = GetAgeMultiplier()
-    const Load = Number(LoadInput.value)
+function ShowExerciseRank(Name, Rank) {
+    const Cloned = RankTemplate.content.cloneNode(true)
+    
+    const NameText = Cloned.children[1].children[0]
+    const RankText = Cloned.children[1].children[1]
 
-    if (Reps == 1) {
-        OneRM = Load
-        AgeMultiplier = 1
-    } else {
-        OneRM = ONERMFORMULAS[SelectedOption.dataset.type](Load, Reps, SelectedOption.dataset.bw)
-    }
+    NameText.textContent = Name
+    RankText.textContent = Rank
 
-    OneRMResultText.textContent = String(OneRM) + MeasurementUnit.selectedOptions[0].value
+    Results.appendChild(Cloned)
+}
 
-    const Gender = GenderSelect.selectedOptions[0].value
-    const Exercise = SelectedOption.value.replace(/\s/g, "")
-    const ExerciseType = SelectedOption.dataset.type
+CalculateButtons.forEach( (CalculateButton) => {
+    CalculateButton.addEventListener("click", () => {
+        EvaluatePerformance(CalculateButton.id)
+    })
+}) 
 
-    const Ranking = GetRanking(OneRM, Exercise, ExerciseType, Gender, AgeMultiplier)
-    RankingResultText.textContent = Ranking + "!"
+MenuOptions.forEach( (Button) => {
+    Button.addEventListener("click", () => {
+        MenuOptionsContainer.classList.add("NotRendered")
+        const MenuToOpen = document.getElementById(Button.dataset.menu)
 
-    OneRMBuildup.textContent = "Your 1RM is:"
-    RankBuildup.textContent = "You're:"
+        MenuToOpen.classList.remove("NotRendered")
+    })
 })
 
 if ("serviceWorker" in navigator) {
@@ -117,5 +217,4 @@ if ("serviceWorker" in navigator) {
             console.error("Service Worker failed:", err);
         });
     });
-
 }
