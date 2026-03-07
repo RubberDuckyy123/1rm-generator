@@ -117,8 +117,8 @@ export const PERFORMMETRICSINFO = {
         TwentyMeterSprint: {
             Beginner: {min: 3.67, max: Infinity},
             Novice: {min: 3.3, max: 3.67},
-            Intermediate: {min: 2.9, max: 3.3},
-            Advanced: {min: 2.7, max: 2.9}
+            Intermediate: {min: 2.91, max: 3.3},
+            Advanced: {min: 2.7, max: 2.91}
         }
     },
     Female: {
@@ -143,8 +143,9 @@ export const PERFORMMETRICSINFO = {
         TwentyMeterSprint: {
             Beginner: {min: 4.1, max: Infinity},
             Novice: {min: 3.8, max: 4.1},
-            Intermediate: {min: 3.4, max: 3.8},
-            Advanced: {min: 3.1, max: 3.4}
+            Intermediate: {min: 3.41, max: 3.8},
+            Advanced: {min: 3.1, max: 3.41}
         }
     }
 }
+
