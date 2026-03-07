@@ -1,4 +1,4 @@
-const CACHE_NAME = "one-rm-v4.5";
+const CACHE_NAME = "one-rm-v4.6";
 
 const FILES_TO_CACHE = [
   "/1rm-generator/",
@@ -40,6 +40,7 @@ self.addEventListener("fetch", event => {
   );
 
 });
+
 
 
 
