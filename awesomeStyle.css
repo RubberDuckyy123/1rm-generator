@@ -192,7 +192,7 @@ body {
     display: flex;
     position: absolute;
     flex-direction: column;
-    gap: 25%;
+    gap: 15%;
     width: 100vw;
     height: 100vh;
     left: 50%;
@@ -219,3 +219,4 @@ body {
 .NotRendered {
     display: none !important;
 }
+
