@@ -13,7 +13,7 @@ body {
     flex-direction: column;
 }
 
-#TitleText {
+.TitleText {
     text-align: center;
     font-size: 3.75rem;
     margin-top: 20px;
@@ -22,7 +22,7 @@ body {
     font-weight: 400;
 }
 
-.AllWorkoutInfo {
+.CardContainer {
     display: block;
     width: 80vw;
     margin-left: auto;
@@ -55,12 +55,15 @@ body {
 }
 
 .WorkoutInput {
-    width: 100%;
+    width: var(--width, 100%);
     height: 50px;
     border-width: 3px;
     border-radius: 15px;
     font-size: 2rem;
     text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .WorkoutDropdown {
@@ -69,13 +72,17 @@ body {
     text-align: center;
     border-width: 3px;
     border-radius: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .WorkoutLabel {
-    font-size: 2rem;
+    font-size: var(--font-size, 2rem);
     margin: 10px;
     font-family: "BBH Bogle", sans-serif;
     font-weight: 400;
+    text-align: center;
 }
 
 #MeasureUnitContainer {
@@ -92,7 +99,7 @@ body {
     font-size: 1.5rem;
 }
 
-#CalculateButton {
+.CalculateButton {
     position: relative;
     display: block;
     width: clamp(200px, 60vw, 625px);
@@ -111,12 +118,12 @@ body {
     cursor: pointer;
 }
 
-#CalculateButton:active {
+.CalculateButton:active {
     transform: scale(0.935);
     background-color: #4a6c92;
 }
 
-#CalculateButton:hover:not(:active) {
+.CalculateButton:hover:not(:active) {
     transform: scale(1.07);
     background-color: #86aed9;
 }
@@ -149,3 +156,66 @@ body {
     font-weight: normal;
 }
 
+.SeparatorLine {
+    height: 3px;
+    background-color: black;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+#ResultsText {
+    font-size: 4rem;
+    font-family: "BBH Bogle", sans-serif;
+}
+
+.ExerciseResult {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10%
+}
+
+.ExerciseResultText {
+    font-size: clamp(1rem, 6vw, 2rem);
+    width: 100%;
+}
+
+.ExerciseResultText.Name {
+    text-align: left;
+}
+
+.ExerciseResultText.Rank {
+    text-align: right;
+}
+
+#MenuOptions {
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    gap: 25%;
+    width: 100vw;
+    height: 100vh;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    justify-content: center;
+    align-items: center;
+}
+
+.MenuOption {
+    width: 70vw;
+    aspect-ratio: 2/1;
+    background-color: transparent;
+    border: 10px solid black;
+    border-radius: 30px;
+}
+
+.MenuOption h1 {
+    font-family: "BBH Bogle", sans-serif;
+    text-align: center;
+    font-size: clamp(1rem, 10vw, 4rem)
+}
+
+.NotRendered {
+    display: none !important;
+}
