@@ -1,6 +1,6 @@
 {
-    "name": "1RM Generator",
-    "short_name": "1RM Generator",
+    "name": "Performance Index",
+    "short_name": "Performance",
     "start_url": "/1rm-generator/",
     "display": "standalone",
     "background_color": "#d6d6d6",
@@ -20,4 +20,5 @@
     ]
 
 }
+
 
