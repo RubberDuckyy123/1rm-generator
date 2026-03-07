@@ -9,67 +9,112 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Faustina:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=BBH+Bogle&display=swap" rel="stylesheet">
         <link rel="manifest" href="manifest.json">
         <script type="module" src="awesomeScript.js" defer></script>
     </head>
     <body>
-        <h1 id="TitleText">1RM Generator</h1>
-        <div class="AllWorkoutInfo">
-            <div class="WorkoutInfo">
+        <div id="MenuOptions">
+            <button data-menu="OneRMGenerator" class="MenuOption">
+                <h1>1RM Generator</h1>
+            </button>
+            <button data-menu="PerformanceMetrics" class="MenuOption">
+                <h1>Performance Metrics</h1>
+            </button>
+        </div>
+
+        <div id="OneRMGenerator" class="Menu NotRendered">
+            <h1 id="1RMTitleText" class="TitleText">1RM Generator</h1>
+            <div class="CardContainer">
+                <div class="WorkoutInfo">
+                    <h2 class="WorkoutLabel">GENDER:</h2>
+                    <select id="OneRMGenderSelect" class="WorkoutDropdown">
+                        <option>Male</option>
+                        <option>Female</option>
+                    </select>
+                </div>
+                <div class="MainInfoContainer">
+                    <div class="WorkoutInfo">
+                        <h2 class="WorkoutLabel">AGE:</h2>
+                        <input id="AgeInput" class="WorkoutInput" type="number">
+                    </div>
+                    <div class="WorkoutInfo">
+                        <h2 class="WorkoutLabel">WEIGHT:</h2>
+                        <input id="WeightInput" class="WorkoutInput" type="number">
+                    </div>
+                    <div class="WorkoutInfo">
+                        <h2 class="WorkoutLabel">LOAD:</h2>
+                        <input id="LoadInput" class="WorkoutInput" type="number">
+                    </div>
+                    <div class="WorkoutInfo">
+                        <h2 class="WorkoutLabel">REPS:</h2>
+                        <input id="RepsInput" class="WorkoutInput" type="number">
+                    </div>
+                </div>
+                <div class="WorkoutInfo">
+                    <h2 class="WorkoutLabel">EXERCISE:</h2>
+                    <select class="WorkoutDropdown" id="ExerciseSelect">
+                        <option data-type="Weight">Bench Press</option>
+                        <option data-type="Weight">Deadlift</option>
+                        <option data-type="Weight">Squat</option>
+                        <option data-type="Weight">Overhead Press</option>
+                        <option data-type="Bodyweight" data-bw="0.70">Push Ups</option>
+                        <option data-type="Bodyweight" data-bw="1.0">Chin Ups</option>
+                        <option data-type="Bodyweight" data-bw="0.967">Dips</option>
+                    </select>
+                </div>
+            </div>
+            <div id="MeasureUnitContainer">
+                <h2>Measurement Unit:</h2>
+                <select id="UnitSelect">
+                    <option>lbs</option>
+                    <option>kgs</option>
+                </select>
+            </div>
+            <button class="CalculateButton" id="OneRMCalculateButton">CALCULATE</button>
+            <h3 class="BuildUpText" id="ScoreBuildup"></h3>
+            <h1 class="Result" id="OneRMResult"></h1>
+            <h3 class="BuildUpText" id="RankBuildup"></h3>
+            <h1 class="Result" id="RankingResult"></h1>
+        </div>
+
+        <div id="PerformanceMetrics" class="Menu NotRendered">
+            <h1 id="PeformanceMetricsTitle" class="TitleText">Performance Metrics</h1>
+            <div class="CardContainer">
                 <h2 class="WorkoutLabel">GENDER:</h2>
-                <select id="GenderSelect" class="WorkoutDropdown">
+                <select id="MetricsGenderSelect" class="WorkoutDropdown">
                     <option>Male</option>
                     <option>Female</option>
                 </select>
+
+                <hr class="SeparatorLine">
+
+                <h2 class="WorkoutLabel">20m Sprint</h2>
+                <input data-shortname="20m" data-name="TwentyMeterSprint" class="WorkoutInput PerformMetricInfo" style="--width: 50%" placeholder="Secs">
+                <h2 class="WorkoutLabel">Vertical Jump</h2>
+                <input data-shortname="V Jump" data-inputtype="distance" data-name="VerticalJump" class="WorkoutInput PerformMetricInfo" style="--width: 50%" placeholder="ft">
+                <h2 class="WorkoutLabel">Broad Jump</h2>
+                <input data-shortname="B Jump" data-inputtype="distance" data-name="BroadJump" class="WorkoutInput PerformMetricInfo" style="--width: 50%" placeholder="ft">
+                <h2 class="WorkoutLabel">Medicine Ball Chest Throw</h2>
+                <input data-shortname="Med Ball" data-inputtype="distance" data-name="MedicineBallChestThrow" class="WorkoutInput PerformMetricInfo" style="--width: 50%" placeholder="ft">
+
             </div>
-            <div class="MainInfoContainer">
-                <div class="WorkoutInfo">
-                    <h2 class="WorkoutLabel">AGE:</h2>
-                    <input id="AgeInput" class="WorkoutInput" type="number">
+            <button class="CalculateButton" id="PerformMetricsCalculateButton">CALCULATE</button>
+
+            <div id="ResultsContainer" class="CardContainer NotRendered">
+                <h1 class="TitleText">RESULTS:</h1>
+                <div id="Results">
+                    <template id="ExerciseRankTemplate">
+                        <hr class="SeparatorLine">
+                        <div class="ExerciseResult">
+                            <h2 class="ExerciseResultText Name">Med Ball</h2>
+                            <h2 class="ExerciseResultText Rank">Intermediate</h2>
+                        </div>
+                    </template>
                 </div>
-                <div class="WorkoutInfo">
-                    <h2 class="WorkoutLabel">WEIGHT:</h2>
-                    <input id="WeightInput" class="WorkoutInput" type="number">
-                </div>
-                <div class="WorkoutInfo">
-                    <h2 class="WorkoutLabel">LOAD:</h2>
-                    <input id="LoadInput" class="WorkoutInput" type="number">
-                </div>
-                <div class="WorkoutInfo">
-                    <h2 class="WorkoutLabel">REPS:</h2>
-                    <input id="RepsInput" class="WorkoutInput" type="number">
-                </div>
-            </div>
-            <div class="WorkoutInfo">
-                <h2 class="WorkoutLabel">EXERCISE:</h2>
-                <select class="WorkoutDropdown" id="ExerciseSelect">
-                    <option data-type="Weight">Bench Press</option>
-                    <option data-type="Weight">Deadlift</option>
-                    <option data-type="Weight">Squat</option>
-                    <option data-type="Weight">Overhead Press</option>
-                    <option data-type="Bodyweight" data-bw="0.70">Push Ups</option>
-                    <option data-type="Bodyweight" data-bw="1.0">Chin Ups</option>
-                    <option data-type="Bodyweight" data-bw="0.967">Dips</option>
-                </select>
             </div>
         </div>
-        <div id="MeasureUnitContainer">
-            <h2>Measurement Unit:</h2>
-            <select id="UnitSelect">
-                <option>lbs</option>
-                <option>kgs</option>
-            </select>
-        </div>
-        <button id="CalculateButton">CALCULATE</button>
-        <h3 class="BuildUpText" id="ScoreBuildup"></h3>
-        <h1 class="Result" id="OneRMResult"></h1>
-        <h3 class="BuildUpText" id="RankBuildup"></h3>
-        <h1 class="Result" id="RankingResult"></h1>
+
         <h3 id="CreditText">Made by <i><strong>Ty Habermehl</strong></i></h3>
     </body>
-
 </html>
-
