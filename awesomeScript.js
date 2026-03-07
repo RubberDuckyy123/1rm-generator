@@ -162,6 +162,7 @@ function GetAgeMultiplier() {
     return 1
 }
 
+
 function FeetToInches(input) {
     const parts = input.trim().split(/['"]/).filter(p => p !== "");
 
@@ -170,7 +171,9 @@ function FeetToInches(input) {
 
     if (parts.length === 2) {
         feet = Number(parts[0]);
-        inches = Number(parts[1]);
+        inches = parts[1]
+        const ActualInches = inches.slice(0, 1) + "." + inches.slice(1)
+        inches = Number(ActualInches);
     } 
     else if (parts.length === 1) {
         inches = Number(parts[0]) * 12;
@@ -218,4 +221,5 @@ if ("serviceWorker" in navigator) {
         });
     });
 }
+
 
