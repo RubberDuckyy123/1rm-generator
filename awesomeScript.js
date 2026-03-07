@@ -1,7 +1,7 @@
 import { AGEMULTIPLERS, ONERMEXERCISEINFO, PERFORMMETRICSINFO } from "./RankingData.js"
 
-const OneRMGenderSelect = document.getElementById("OneRMMetricsGenderSelect")
-const MetricsGenderSelect = document.getElementById("MetricsMetricsGenderSelect")
+const OneRMGenderSelect = document.getElementById("OneRMGenderSelect")
+const MetricsGenderSelect = document.getElementById("MetricsGenderSelect")
 
 const LoadInput = document.getElementById("LoadInput")
 const RepsInput = document.getElementById("RepsInput")
@@ -218,3 +218,4 @@ if ("serviceWorker" in navigator) {
         });
     });
 }
+
