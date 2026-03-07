@@ -8,7 +8,7 @@ export const AGEMULTIPLERS = [
     {min: 70, max: Infinity, percent: 0.65}
 ]
 
-export const EXERCISEINFO = {
+export const ONERMEXERCISEINFO = {
     Male: {
         Weight: {
             OverheadPress: {
@@ -92,4 +92,59 @@ export const EXERCISEINFO = {
         }
     }
 
+}
+
+export const PERFORMMETRICSINFO = {
+    Male: {
+        BroadJump: {
+            Beginner: {min: -Infinity, max: 64},
+            Novice: {min: 64, max: 74},
+            Intermediate: {min: 74, max: 86},
+            Advanced: {min: 86, max: 99}
+        },
+        VerticalJump: {
+            Beginner: {min: -Infinity, max: 13},
+            Novice: {min: 13, max: 15},
+            Intermediate: {min: 15, max: 19},
+            Advanced: {min: 19, max: 27}
+        },
+        MedicineBallChestThrow: {
+            Beginner: {min: -Infinity, max: 90},
+            Novice: {min: 90, max: 137},
+            Intermediate: {min: 137, max: 193},
+            Advanced: {min: 193, max: 252}
+        },
+        TwentyMeterSprint: {
+            Beginner: {min: 3.67, max: Infinity},
+            Novice: {min: 3.3, max: 3.67},
+            Intermediate: {min: 2.9, max: 3.3},
+            Advanced: {min: 2.7, max: 2.9}
+        }
+    },
+    Female: {
+        BroadJump: {
+            Beginner: {min: -Infinity, max: 44},
+            Novice: {min: 44, max: 54},
+            Intermediate: {min: 54, max: 65},
+            Advanced: {min: 65, max: 77}
+        },
+        VerticalJump: {
+            Beginner: {min: -Infinity, max: 7},
+            Novice: {min: 7, max: 8},
+            Intermediate: {min: 8, max: 14},
+            Advanced: {min: 14, max: 18}
+        },
+        MedicineBallChestThrow: {
+            Beginner: {min: -Infinity, max: 69},
+            Novice: {min: 69, max: 81},
+            Intermediate: {min: 81, max: 134},
+            Advanced: {min: 134, max: 181}
+        },
+        TwentyMeterSprint: {
+            Beginner: {min: 4.1, max: Infinity},
+            Novice: {min: 3.8, max: 4.1},
+            Intermediate: {min: 3.4, max: 3.8},
+            Advanced: {min: 3.1, max: 3.4}
+        }
+    }
 }
