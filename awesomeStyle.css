@@ -196,12 +196,9 @@ body {
 .MenuOption {
     width: 70vw;
     aspect-ratio: 2/1;
-    background-color: transparent;
+    background-color: #b6b6b6;
     border: 10px solid black;
     border-radius: 30px;
-}
-
-.MenuOption h1 {
     font-family: "BBH Bogle", sans-serif;
     text-align: center;
     font-size: clamp(1rem, 10vw, 4rem)
@@ -215,4 +212,18 @@ body {
     width: 50px;
     aspect-ratio: 1/1;
     margin-top: auto;
+}
+
+.SwitchButton {
+    width: 50vw;
+    aspect-ratio: 4/1;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #b6b6b6;
+    border: 5px solid black;
+    border-radius: 15px;
+    font-family: "BBH Bogle", sans-serif;
+    margin-top: 50px;
+    font-size: clamp(0.5rem, 5vw, 2.5rem);
 }
