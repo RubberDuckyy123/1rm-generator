@@ -15,12 +15,8 @@
     </head>
     <body>
         <div id="MenuOptions">
-            <button data-menu="OneRMGenerator" class="MenuOption">
-                <h1>1RM Generator</h1>
-            </button>
-            <button data-menu="PerformanceMetrics" class="MenuOption">
-                <h1>Performance Metrics</h1>
-            </button>
+            <button data-menu="OneRMGenerator" class="MenuOption">1RM Generator</button>
+            <button data-menu="PerformanceMetrics" class="MenuOption">Performance Metrics</button>
         </div>
 
         <div id="OneRMGenerator" class="Menu NotRendered">
@@ -76,6 +72,8 @@
             <h1 class="Result" id="OneRMResult"></h1>
             <h3 class="BuildUpText" id="RankBuildup"></h3>
             <h1 class="Result" id="RankingResult"></h1>
+
+            <button class="SwitchButton" data-menu="PerformanceMetrics" id="SwitchToPerformanceMetrics">Performance Metrics</button>
         </div>
 
         <div id="PerformanceMetrics" class="Menu NotRendered">
@@ -113,9 +111,10 @@
                     </template>
                 </div>
             </div>
+
+            <button class="SwitchButton" data-menu="OneRMGenerator" id="SwitchToOneRM">1RM Generator</button>
         </div>
 
         <img id="Logo" src="Logo.png" alt="Creators Logo">
     </body>
 </html>
-
