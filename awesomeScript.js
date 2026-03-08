@@ -29,6 +29,8 @@ const ResultsContainer = document.getElementById("ResultsContainer")
 const MenuOptions = document.querySelectorAll(".MenuOption")
 const MenuOptionsContainer = document.getElementById("MenuOptions")
 
+const MenuSwitchers = document.querySelectorAll(".SwitchButton")
+
 const ONERMFORMULAS = {
     Weight: (Load, Reps) => Number((Load * Reps * 0.033 + Load).toFixed(1)),
     Bodyweight: (Load, Reps, bw) => Number(((bw * Load) * (1 + 0.033 * Reps)).toFixed(1))
@@ -36,6 +38,8 @@ const ONERMFORMULAS = {
 
 let OneRM
 let AgeMultiplier
+
+let CurrentOpenMenu
 
 const ONERMRANKINGINFO = {
     Weight: {
@@ -162,7 +166,6 @@ function GetAgeMultiplier() {
     return 1
 }
 
-
 function FeetToInches(input) {
     const parts = input.trim().split(/['"]/).filter(p => p !== "");
 
@@ -206,6 +209,17 @@ MenuOptions.forEach( (Button) => {
         const MenuToOpen = document.getElementById(Button.dataset.menu)
 
         MenuToOpen.classList.remove("NotRendered")
+        CurrentOpenMenu = MenuToOpen
+    })
+})
+
+MenuSwitchers.forEach( (Button) => {
+    Button.addEventListener("click", () => {
+        CurrentOpenMenu.classList.add("NotRendered")
+        const MenuToOpen = document.getElementById(Button.dataset.menu)
+
+        MenuToOpen.classList.remove("NotRendered")
+        CurrentOpenMenu = MenuToOpen
     })
 })
 
@@ -221,5 +235,3 @@ if ("serviceWorker" in navigator) {
         });
     });
 }
-
-
