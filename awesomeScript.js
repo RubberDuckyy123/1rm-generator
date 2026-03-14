@@ -65,6 +65,7 @@ function EvalOneRM() {
 
     const RANKING = ShowAndReturnOneRMRanking()
     RankingResultText.textContent = RANKING.Name
+    RankingResultText.style.color = RANKCOLORS[RANKING.Name]
 
     ResetOneRMVisual()
     SetupOneRMVisual()
@@ -145,9 +146,7 @@ function ShowAndReturnPerformMetricsRankings() {
 }
 
 function GetNeedleRotation(RANK, SCORE, RANKNUMBER) {
-
     // Move Everything so min is zero for percentage math
-    const MovedMin = RANK.min - RANK.min
     const MovedMax = RANK.max - RANK.min
     const MovedScore = SCORE - RANK.min
 
