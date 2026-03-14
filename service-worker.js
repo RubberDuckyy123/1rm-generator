@@ -9,6 +9,7 @@ const FILES_TO_CACHE = [
   "/1rm-generator/VisualsDrawer.js",
   "/1rm-generator/Icons/SmallIcon.png",
   "/1rm-generator/Icons/BigIcon.png"
+  "/1rm-generator/Logo.png"
 ];
 
 self.addEventListener("install", event => {
