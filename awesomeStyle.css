@@ -143,6 +143,14 @@ body {
     font-weight: 400;
 }
 
+#RankingResult {
+    text-shadow:
+        -3px -3px 0 black,
+        3px -3px 0 black,
+        -3px  3px 0 black,
+        3px  3px 0 rgb(0, 0, 0);
+}
+
 #OneRMResult {
     margin-bottom: 30px;
 }
