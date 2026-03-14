@@ -1,237 +1,237 @@
-import { AGEMULTIPLERS, ONERMEXERCISEINFO, PERFORMMETRICSINFO } from "./RankingData.js"
-
-const OneRMGenderSelect = document.getElementById("OneRMGenderSelect")
-const MetricsGenderSelect = document.getElementById("MetricsGenderSelect")
-
-const LoadInput = document.getElementById("LoadInput")
-const RepsInput = document.getElementById("RepsInput")
-const WeightInput = document.getElementById("WeightInput")
-const AgeInput = document.getElementById("AgeInput")
-
-const ExerciseSelect = document.getElementById("ExerciseSelect")
-
-const MeasurementUnit = document.getElementById("UnitSelect")
-
-const CalculateButtons = document.querySelectorAll(".CalculateButton")
-
-const OneRMBuildup = document.getElementById("ScoreBuildup")
-const RankBuildup = document.getElementById("RankBuildup")
-
-const OneRMResultText = document.getElementById("OneRMResult")
-const RankingResultText = document.getElementById("RankingResult")
-
-const PerformMetricsInfo = document.querySelectorAll(".PerformMetricInfo")
-
-const RankTemplate = document.getElementById("ExerciseRankTemplate")
-const Results = document.getElementById("Results")
-const ResultsContainer = document.getElementById("ResultsContainer")
-
-const MenuOptions = document.querySelectorAll(".MenuOption")
-const MenuOptionsContainer = document.getElementById("MenuOptions")
-
-const MenuSwitchers = document.querySelectorAll(".SwitchButton")
-
-const ONERMFORMULAS = {
-    Weight: (Load, Reps) => Number((Load * Reps * 0.033 + Load).toFixed(1)),
-    Bodyweight: (Load, Reps, bw) => Number(((bw * Load) * (1 + 0.033 * Reps)).toFixed(1))
+* {
+    box-sizing: border-box;
 }
 
-let OneRM
-let AgeMultiplier
-
-let CurrentOpenMenu
-
-const ONERMRANKINGINFO = {
-    Weight: {
-        DataMultiplier: (AgeMultiplier) => Number(WeightInput.value) * AgeMultiplier,
-        Comparer: () => OneRM
-    },
-    Bodyweight: {
-        DataMultiplier: (AgeMultiplier) => AgeMultiplier,
-        Comparer: () => Number(RepsInput.value)
-    }
+html, body {
+    height: 99%;
+    overflow-x: hidden;
 }
 
-function EvaluatePerformance(mode) {
-    if (mode == "OneRMCalculateButton") {
-
-        CalculateOneRM()
-
-        OneRMBuildup.textContent = "Your 1RM is:"
-        RankBuildup.textContent = "You're:"
-
-        OneRMResultText.textContent = String(OneRM) + MeasurementUnit.selectedOptions[0].value
-
-        const Gender = OneRMGenderSelect.selectedOptions[0].value
-        const Exercise = ExerciseSelect.selectedOptions[0].value.replace(/\s/g,  "")
-        const ExerciseType = ExerciseSelect.selectedOptions[0].dataset.type
-
-        const ExerciseData = ONERMEXERCISEINFO[Gender][ExerciseType][Exercise]
-
-        if (IsBeginner(ExerciseType, ExerciseData.Novice, AgeMultiplier)) {
-            RankingResultText.textContent = "Beginner!"
-            return
-        }
-    
-        const levels = Object.keys(ExerciseData)
-        const Comparer = ONERMRANKINGINFO[ExerciseType].Comparer()
-        const DataMultiplier = ONERMRANKINGINFO[ExerciseType].DataMultiplier(AgeMultiplier)
-
-        for (let i = 0; i < levels.length; i++) {
-            const level = levels[i]
-            const min = Math.round(ExerciseData[level].min * DataMultiplier)
-            const max = Math.round(ExerciseData[level].max * DataMultiplier)
-            if (Comparer >= min && Comparer <= max) {
-                RankingResultText.textContent = levels[i]
-                return
-            }
-        }
-        RankingResultText.textContent = "Elite!"
-
-    } else {
-
-        Results.innerHTML = ""
-        ResultsContainer.classList.remove("NotRendered")
-        PerformMetricsInfo.forEach( (InputBox) => {
-            
-            let InputValue
-            if (InputBox.dataset.inputtype == "distance") {
-                InputValue = FeetToInches(InputBox.value)
-            } else {
-                InputValue = Number(InputBox.value)
-            }
-            
-            if (isNaN(InputValue) || InputValue == "") {
-                return
-            }
-
-            const ExerciseData = PERFORMMETRICSINFO[MetricsGenderSelect.selectedOptions[0].value][InputBox.dataset.name]
-
-            const levels = Object.keys(ExerciseData)
-
-            for (let i = 0; i < levels.length; i++) {
-                const level = levels[i]
-                const min = ExerciseData[level].min
-                const max = ExerciseData[level].max
-                if (InputValue >= min && InputValue <= max) {
-                    ShowExerciseRank(InputBox.dataset.shortname, level)
-                    return
-                }
-            }
-            ShowExerciseRank(InputBox.dataset.shortname, "Elite")
-        })
-    }
+body {
+    background-color: #d6d6d6;
+    display: flex;
+    flex-direction: column;
 }
 
-function CalculateOneRM() {
-    const SelectedOption = ExerciseSelect.selectedOptions[0]
-    const Reps = Number(RepsInput.value)
-    AgeMultiplier = GetAgeMultiplier()
-    const Load = Number(LoadInput.value)
-
-    if (Reps == 1) {
-        OneRM = Load
-        AgeMultiplier = 1
-    } else {
-        OneRM = ONERMFORMULAS[SelectedOption.dataset.type](Load, Reps, SelectedOption.dataset.bw)
-    }
+.TitleText {
+    text-align: center;
+    font-size: 3.75rem;
+    margin-top: 20px;
+    margin-bottom: 24px;
+    font-family: "BBH Bogle", sans-serif;
+    font-weight: 400;
 }
 
-function IsBeginner(ExerciseType, Novice, AgeMultiplier) {
-    let Comparer
-    let MINmin
-    if (ExerciseType == "Weight") {
-        Comparer = OneRM
-        const Weight = Number(WeightInput.value)
-        MINmin = Math.round(Novice.min * Weight * AgeMultiplier)
-    } else {
-        Comparer = Number(RepsInput.value)
-        MINmin = Math.round(Novice.min * AgeMultiplier)
-    }
-
-    if (Comparer < MINmin) {
-        return true
-    }
-    return false
+.CardContainer {
+    display: block;
+    width: 80vw;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 30px;
+    padding-right: 30px;
+    border: 6px solid black;
+    border-radius: 15px;
+    background-color: #b6b6b6;
 }
 
-function GetAgeMultiplier() {
-    const Length = AGEMULTIPLERS.length
-    const Age = Number(AgeInput.value)
-    for (let i = 0; i < Length; i++) {
-        if (Age >= AGEMULTIPLERS[i].min && Age <= AGEMULTIPLERS[i].max) {
-            return AGEMULTIPLERS[i].percent
-        }
-    }
-    return 1
+.MainInfoContainer {
+    display: grid;
+    column-gap: 5vw;
+    row-gap: 2.5vw;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
 }
 
-function FeetToInches(input) {
-    const parts = input.trim().split(/['"]/).filter(p => p !== "");
-
-    let feet = 0;
-    let inches = 0;
-
-    if (parts.length === 2) {
-        feet = Number(parts[0]);
-        inches = parts[1]
-        const ActualInches = inches.slice(0, 1) + "." + inches.slice(1)
-        inches = Number(ActualInches);
-    } 
-    else if (parts.length === 1) {
-        inches = Number(parts[0]) * 12;
-    }
-
-    return (feet * 12) + inches;
+.WorkoutInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    min-width: 0;
 }
 
-function ShowExerciseRank(Name, Rank) {
-    const Cloned = RankTemplate.content.cloneNode(true)
-    
-    const NameText = Cloned.children[1].children[0]
-    const RankText = Cloned.children[1].children[1]
-
-    NameText.textContent = Name
-    RankText.textContent = Rank
-
-    Results.appendChild(Cloned)
+.WorkoutInput {
+    width: var(--width, 100%);
+    height: 50px;
+    border-width: 3px;
+    border-radius: 15px;
+    font-size: 2rem;
+    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-CalculateButtons.forEach( (CalculateButton) => {
-    CalculateButton.addEventListener("click", () => {
-        EvaluatePerformance(CalculateButton.id)
-    })
-}) 
+.WorkoutDropdown {
+    width: 60%;
+    font-size: 1.35rem;
+    text-align: center;
+    border-width: 3px;
+    border-radius: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
 
-MenuOptions.forEach( (Button) => {
-    Button.addEventListener("click", () => {
-        MenuOptionsContainer.classList.add("NotRendered")
-        const MenuToOpen = document.getElementById(Button.dataset.menu)
+.WorkoutLabel {
+    font-size: var(--font-size, 2rem);
+    margin: 10px;
+    font-family: "BBH Bogle", sans-serif;
+    font-weight: 400;
+    text-align: center;
+}
 
-        MenuToOpen.classList.remove("NotRendered")
-        CurrentOpenMenu = MenuToOpen
-    })
-})
+#MeasureUnitContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
 
-MenuSwitchers.forEach( (Button) => {
-    Button.addEventListener("click", () => {
-        CurrentOpenMenu.classList.add("NotRendered")
-        const MenuToOpen = document.getElementById(Button.dataset.menu)
+#UnitSelect {
+    width: 65px;
+    height: 50%;
+    font-size: 1.5rem;
+}
 
-        MenuToOpen.classList.remove("NotRendered")
-        CurrentOpenMenu = MenuToOpen
-    })
-})
+.CalculateButton {
+    position: relative;
+    display: block;
+    width: clamp(200px, 60vw, 625px);
+    aspect-ratio: 5/1;
+    background-color: #6898cd;
+    border-width: 6px;
+    border-radius: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    font-size: 2.75rem;
+    font-family: "BBH Bogle", sans-serif;
+    font-weight: 400;
+    transition: transform 0.1s ease, background-color 0.1s ease;
+    cursor: pointer;
+}
 
-if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => {
-        navigator.serviceWorker
-        .register("/1rm-generator/service-worker.js")
-        .then(reg => {
-            console.log("Service Worker registered:", reg.scope);
-        })
-        .catch(err => {
-            console.error("Service Worker failed:", err);
-        });
-    });
+.CalculateButton:active {
+    transform: scale(0.935);
+    background-color: #4a6c92;
+}
+
+.CalculateButton:hover:not(:active) {
+    transform: scale(1.07);
+    background-color: #86aed9;
+}
+
+.BuildUpText {
+    text-align: center;
+    margin-top: 0px;
+    margin-bottom: 15px;
+}
+
+.Result {
+    text-align: center;
+    font-size: clamp(1.5rem, 17vw, 4rem);
+    margin-top: -15px;
+    margin-bottom: 15px;
+    font-family: "BBH Bogle", sans-serif;
+    font-weight: 400;
+}
+
+#OneRMResult {
+    margin-bottom: 30px;
+}
+
+.SeparatorLine {
+    height: 3px;
+    background-color: black;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+#ResultsText {
+    font-size: 4rem;
+    font-family: "BBH Bogle", sans-serif;
+}
+
+.ExerciseResult {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10%
+}
+
+.ExerciseResultText {
+    font-size: clamp(1rem, 6vw, 2rem);
+    width: 100%;
+}
+
+.ExerciseResultText.Name {
+    text-align: left;
+}
+
+.ExerciseResultText.Rank {
+    text-align: right;
+}
+
+#MenuOptions {
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    gap: 15%;
+    width: 100vw;
+    height: 100vh;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    justify-content: center;
+    align-items: center;
+}
+
+.MenuOption {
+    width: 70vw;
+    aspect-ratio: 2/1;
+    background-color: #b6b6b6;
+    border: 10px solid black;
+    border-radius: 30px;
+    font-family: "BBH Bogle", sans-serif;
+    text-align: center;
+    font-size: clamp(1rem, 10vw, 4rem)
+}
+
+.NotRendered {
+    display: none !important;
+}
+
+#Logo {
+    width: 50px;
+    aspect-ratio: 1/1;
+    margin-top: auto;
+}
+
+.MenuReverse {
+    width: 50vw;
+    aspect-ratio: 4/1;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #b6b6b6;
+    border: 5px solid black;
+    border-radius: 15px;
+    font-family: "BBH Bogle", sans-serif;
+    margin-top: 50px;
+    font-size: clamp(0.5rem, 5vw, 2.5rem);
+}
+
+.Visual {
+    display: block;
+    width: 80vw;
+    margin-left: auto;
+    margin-right: auto;
+    height: auto;
 }
