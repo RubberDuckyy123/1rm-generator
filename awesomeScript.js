@@ -154,7 +154,7 @@ function GetNeedleRotation(RANK, SCORE, RANKNUMBER) {
 
     const Rotation = (ANGLE * RANKNUMBER) + ANGLE * ScorePercentage
 
-    return Rotation
+    return Math.max(Math.min(Rotation, 180), 0)
 }
 
 function CalculateOneRM() {
