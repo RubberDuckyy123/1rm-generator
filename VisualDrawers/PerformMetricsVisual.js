@@ -8,7 +8,12 @@ const HEIGHT = Canvas.height
 
 const TopBarHeight = HEIGHT / 8
 
-const TOTALEXERCISES = Object.keys(PERFORMMETRICSINFO.Male).length
+let EXERCISES = []
+
+const ExerciseInputBoxes = document.querySelectorAll(".PerformMetricInfo")
+ExerciseInputBoxes.forEach( (InputBox) => {
+    EXERCISES.push(InputBox.dataset.shortname)
+})
 
 const RANKS = Object.keys(RANKCOLORS)
 const RANKHEIGHT = (HEIGHT - TopBarHeight) / RANKS.length
@@ -51,25 +56,37 @@ export function SetupPerformMetricsVisual() {
 export function FinishPerformMetricsVisual(ExercisesAndRanks) {
     ctx.font = "14px Arial"
 
-    const Exercises = Object.keys(ExercisesAndRanks)
+    const ProvidedExercises = Object.keys(ExercisesAndRanks)
 
-    const BarWidth = (WIDTH - RANKWIDTH) / TOTALEXERCISES
+    const BarWidth = (WIDTH - RANKWIDTH) / EXERCISES.length
     ctx.fillStyle = "orange"
     const SeparatorLineWidth = 2
     const SemiCircleHeight = 25
 
-    for (let i = 0; i < TOTALEXERCISES; i++) {
+    for (let i = 0; i < ProvidedExercises.length; i++) {
+        EXERCISES[EXERCISES.indexOf(ProvidedExercises[i])] = EXERCISES[i]
+        EXERCISES[i] = ProvidedExercises[i]
+    }
+
+    for (let i = 0; i < EXERCISES.length; i++) {
         const XPos = RANKWIDTH + BarWidth * i
 
         ctx.fillStyle = "black"
         ctx.fillRect(XPos - (SeparatorLineWidth / 2), TopBarHeight, SeparatorLineWidth, HEIGHT)
+
+        ctx.fillStyle = "white"
+        const ExerciseName = EXERCISES[i]
+        const TextDimensions = ctx.measureText(EXERCISES[i])
+        const TextWidth = TextDimensions.width
+        const TextHeight = TextDimensions.actualBoundingBoxAscent + TextDimensions.actualBoundingBoxDescent
+        ctx.fillText(EXERCISES[i], XPos + BarWidth / 2 - TextWidth / 2, TopBarHeight / 2 + TextHeight / 2)
     }
 
-    for (let i = 0; i < Exercises.length; i++) {
-        ctx.fillStyle = RANKCOLORS[ExercisesAndRanks[Exercises[i]].RANK]
-        const RANKNUMBER = RANKS.indexOf(ExercisesAndRanks[Exercises[i]].RANK)
+    for (let i = 0; i < ProvidedExercises.length; i++) {
+        ctx.fillStyle = RANKCOLORS[ExercisesAndRanks[ProvidedExercises[i]].RANK]
+        const RANKNUMBER = RANKS.indexOf(ExercisesAndRanks[ProvidedExercises[i]].RANK)
         const XPos = RANKWIDTH + BarWidth * i
-        const Percent = ExercisesAndRanks[Exercises[i]].PERCENT
+        const Percent = ExercisesAndRanks[ProvidedExercises[i]].PERCENT
         const BarHeight = (HEIGHT - RANKHEIGHT * RANKNUMBER) - (RANKHEIGHT * Percent)
         const YPos = BarHeight
 
@@ -77,12 +94,6 @@ export function FinishPerformMetricsVisual(ExercisesAndRanks) {
         ctx.beginPath()
         ctx.ellipse(XPos + BarWidth / 2, YPos + SemiCircleHeight, BarWidth / 2 - SeparatorLineWidth / 2, SemiCircleHeight, 0, Math.PI, 0)
         ctx.fill()
-
-        ctx.fillStyle = "white"
-        const TextDimensions = ctx.measureText(Exercises[i])
-        const TextWidth = TextDimensions.width
-        const TextHeight = TextDimensions.actualBoundingBoxAscent + TextDimensions.actualBoundingBoxDescent
-        ctx.fillText(Exercises[i], XPos + BarWidth / 2 - TextWidth / 2, TopBarHeight / 2 + TextHeight / 2)
     }
 
     ctx.fillStyle = "black"
