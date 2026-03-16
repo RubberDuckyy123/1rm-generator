@@ -1,6 +1,6 @@
 import { RANKCOLORS } from "../RankingData.js"
 
-const Canvas = document.getElementById("OneRMVisual")
+const Canvas = document.getElementById("GasMeter")
 const ctx = Canvas.getContext("2d")
 
 const WIDTH = Canvas.width
