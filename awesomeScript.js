@@ -70,7 +70,7 @@ function EvalOneRM() {
     SetupOneRMVisual()
 
     const ANGLE = 180 / Object.keys(RANKCOLORS).length
-    const NeedleRotation = (ANGLE * RANKING.RankNumber) + ANGLE * GetPercentage(RANKING.Score, RANKING.Info.min, RANKING.Info.max)
+    const NeedleRotation = Math.max(Math.min((ANGLE * RANKING.RankNumber) + ANGLE * GetPercentage(RANKING.Score, RANKING.Info.min, RANKING.Info.max), 180), 0)
 
     document.getElementById("GasMeter").classList.remove("NotRendered")
 
