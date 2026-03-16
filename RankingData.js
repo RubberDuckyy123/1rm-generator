@@ -111,51 +111,51 @@ export const ONERMEXERCISEINFO = {
 export const PERFORMMETRICSINFO = {
     Male: {
         BroadJump: {
-            Beginner: {min: -Infinity, max: 64},
             Novice: {min: 64, max: 74},
             Intermediate: {min: 74, max: 86},
-            Advanced: {min: 86, max: 99}
+            Advanced: {min: 86, max: 99},
+            Elite: {min: 99, max: 123}
         },
         VerticalJump: {
-            Beginner: {min: -Infinity, max: 13},
             Novice: {min: 13, max: 15},
             Intermediate: {min: 15, max: 19},
-            Advanced: {min: 19, max: 27}
+            Advanced: {min: 19, max: 27},
+            Elite: {min: 27, max: 41}
         },
         MedicineBallChestThrow: {
-            Beginner: {min: -Infinity, max: 90},
             Novice: {min: 90, max: 137},
             Intermediate: {min: 137, max: 193},
-            Advanced: {min: 193, max: 252}
+            Advanced: {min: 193, max: 252},
+            Elite: {min: 252, max: 312}
         },
         TwentyMeterSprint: {
-            Beginner: {min: 3.67, max: Infinity},
-            Novice: {min: 3.3, max: 3.67},
-            Intermediate: {min: 2.91, max: 3.3},
-            Advanced: {min: 2.7, max: 2.91}
+            Beginner: {min: 4.0, max: 5.0},
+            Novice: {min: 3.3, max: 4.0},
+            Intermediate: {min: 2.99, max: 3.3},
+            Advanced: {min: 2.7, max: 2.99}
         }
     },
     Female: {
         BroadJump: {
-            Beginner: {min: -Infinity, max: 44},
             Novice: {min: 44, max: 54},
             Intermediate: {min: 54, max: 65},
-            Advanced: {min: 65, max: 77}
+            Advanced: {min: 65, max: 77},
+            Elite: {min: 77, max: 101}
         },
         VerticalJump: {
-            Beginner: {min: -Infinity, max: 7},
             Novice: {min: 7, max: 8},
             Intermediate: {min: 8, max: 14},
-            Advanced: {min: 14, max: 18}
+            Advanced: {min: 14, max: 18},
+            Elite: {min: 18, max: 32}
         },
         MedicineBallChestThrow: {
-            Beginner: {min: -Infinity, max: 69},
             Novice: {min: 69, max: 81},
             Intermediate: {min: 81, max: 134},
-            Advanced: {min: 134, max: 181}
+            Advanced: {min: 134, max: 181},
+            Elite: {min: 181, max: 229}
         },
         TwentyMeterSprint: {
-            Beginner: {min: 4.1, max: Infinity},
+            Beginner: {min: 4.1, max: 5.5},
             Novice: {min: 3.8, max: 4.1},
             Intermediate: {min: 3.41, max: 3.8},
             Advanced: {min: 3.1, max: 3.41}
