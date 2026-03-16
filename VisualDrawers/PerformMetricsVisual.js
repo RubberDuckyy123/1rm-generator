@@ -1,4 +1,4 @@
-import { RANKCOLORS } from "../RankingData.js"
+import { RANKCOLORS, PERFORMMETRICSINFO } from "../RankingData.js"
 
 const Canvas = document.getElementById("BarGraph")
 const ctx = Canvas.getContext("2d")
@@ -7,6 +7,8 @@ const WIDTH = Canvas.width
 const HEIGHT = Canvas.height
 
 const TopBarHeight = HEIGHT / 8
+
+const TOTALEXERCISES = Object.keys(PERFORMMETRICSINFO.Male).length
 
 const RANKS = Object.keys(RANKCOLORS)
 const RANKHEIGHT = (HEIGHT - TopBarHeight) / RANKS.length
@@ -51,10 +53,17 @@ export function FinishPerformMetricsVisual(ExercisesAndRanks) {
 
     const Exercises = Object.keys(ExercisesAndRanks)
 
-    const BarWidth = (WIDTH - RANKWIDTH) / Exercises.length
+    const BarWidth = (WIDTH - RANKWIDTH) / TOTALEXERCISES
     ctx.fillStyle = "orange"
     const SeparatorLineWidth = 2
     const SemiCircleHeight = 25
+
+    for (let i = 0; i < TOTALEXERCISES; i++) {
+        const XPos = RANKWIDTH + BarWidth * i
+
+        ctx.fillStyle = "black"
+        ctx.fillRect(XPos - (SeparatorLineWidth / 2), TopBarHeight, SeparatorLineWidth, HEIGHT)
+    }
 
     for (let i = 0; i < Exercises.length; i++) {
         ctx.fillStyle = RANKCOLORS[ExercisesAndRanks[Exercises[i]].RANK]
@@ -64,13 +73,10 @@ export function FinishPerformMetricsVisual(ExercisesAndRanks) {
         const BarHeight = (HEIGHT - RANKHEIGHT * RANKNUMBER) - (RANKHEIGHT * Percent)
         const YPos = BarHeight
 
-        ctx.fillRect(XPos, YPos + SemiCircleHeight, BarWidth, HEIGHT - BarHeight)
+        ctx.fillRect(XPos + SeparatorLineWidth / 2, YPos + SemiCircleHeight, BarWidth - SeparatorLineWidth, HEIGHT - BarHeight)
         ctx.beginPath()
-        ctx.ellipse(XPos + BarWidth / 2, YPos + SemiCircleHeight, BarWidth / 2, SemiCircleHeight, 0, Math.PI, 0)
+        ctx.ellipse(XPos + BarWidth / 2, YPos + SemiCircleHeight, BarWidth / 2 - SeparatorLineWidth / 2, SemiCircleHeight, 0, Math.PI, 0)
         ctx.fill()
-
-        ctx.fillStyle = "black"
-        ctx.fillRect(XPos - (SeparatorLineWidth / 2), TopBarHeight, SeparatorLineWidth, HEIGHT)
 
         ctx.fillStyle = "white"
         const TextDimensions = ctx.measureText(Exercises[i])
