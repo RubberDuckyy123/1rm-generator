@@ -1,4 +1,4 @@
-const CACHE_NAME = "one-rm-v6";
+const CACHE_NAME = "one-rm-v6.01";
 
 const FILES_TO_CACHE = [
   "/1rm-generator/",
@@ -8,9 +8,9 @@ const FILES_TO_CACHE = [
   "/1rm-generator/RankingData.js",
   "/1rm-generator/VisualDrawers/OneRMVisual.js",
   "/1rm-generator/VisualDrawers/PerformMetricsVisual/js",
-  "/1rm-generator/manifest.json"
+  "/1rm-generator/manifest.json",
   "/1rm-generator/Icons/SmallIcon.png",
-  "/1rm-generator/Icons/BigIcon.png"
+  "/1rm-generator/Icons/BigIcon.png",
   "/1rm-generator/Logo.png"
 ];
 
