@@ -1,5 +1,6 @@
 import { AGEMULTIPLERS, ONERMEXERCISEINFO, PERFORMMETRICSINFO, RANKCOLORS } from "./RankingData.js"
-import { ResetOneRMVisual, SetupOneRMVisual, FinishOneRMVisual } from "./VisualsDrawer.js"
+import { ResetOneRMVisual, SetupOneRMVisual, FinishOneRMVisual } from "./VisualDrawers/OneRMVisual.js"
+import { ResetPerformMetricsVisual, SetupPerformMetricsVisual, FinishPerformMetricsVisual } from "./VisualDrawers/PerformMetricsVisual.js"
 
 const OneRMGenderSelect = document.getElementById("OneRMGenderSelect")
 const MetricsGenderSelect = document.getElementById("MetricsGenderSelect")
@@ -50,8 +51,6 @@ const ONERMRANKINGINFO = {
     }
 }
 
-const ANGLE = 180 / Object.keys(RANKCOLORS).length
-
 function EvaluatePerformance(mode) {
     if (mode == "OneRMCalculateButton") {
         EvalOneRM()
@@ -70,13 +69,23 @@ function EvalOneRM() {
     ResetOneRMVisual()
     SetupOneRMVisual()
 
-    const NeedleRotation = GetNeedleRotation(RANKING.Info, RANKING.Score, RANKING.RankNumber)
+    const ANGLE = 180 / Object.keys(RANKCOLORS).length
+    const NeedleRotation = (ANGLE * RANKING.RankNumber) + ANGLE * GetPercentage(RANKING.Score, RANKING.Info.min, RANKING.Info.max)
 
     FinishOneRMVisual(NeedleRotation)
 }
 
 function EvalPerformMetrics() {
-    ShowAndReturnPerformMetricsRankings()
+    ResetPerformMetricsVisual()
+    SetupPerformMetricsVisual()
+
+    const RANKINGS = ShowAndReturnPerformMetricsRankings()
+    const Names = Object.keys(RANKINGS)
+    for (let i = 0; i < Names.length; i++) {
+        ShowPerformMetricsExerciseRank(Names[i], RANKINGS[Names[i]].RANK)
+    }
+
+    FinishPerformMetricsVisual(RANKINGS)
 }
 
 function ShowAndReturnOneRMRanking() {
@@ -95,7 +104,7 @@ function ShowAndReturnOneRMRanking() {
     const Comparer = ONERMRANKINGINFO[ExerciseType].Comparer()
     const DataMultiplier = ONERMRANKINGINFO[ExerciseType].DataMultiplier(AgeMultiplier)
 
-    if (IsBeginner(ExerciseType, ExerciseData.Novice, AgeMultiplier)) {
+    if (Comparer < ExerciseData.Novice.min * DataMultiplier) {
         return {Info: {min: 0, max: Math.round(ExerciseData.Novice.min * DataMultiplier)}, Name: "Beginner", Score: Comparer, RankNumber: 0} // Beginner Rank
     }
 
@@ -115,8 +124,10 @@ function ShowAndReturnOneRMRanking() {
 function ShowAndReturnPerformMetricsRankings() {
     Results.innerHTML = ""
     ResultsContainer.classList.remove("NotRendered")
-    PerformMetricsInfo.forEach( (InputBox) => {
-            
+
+    let ExercisesAndRanks = {}
+
+    PerformMetricsInfo.forEach( (InputBox) => { 
         let InputValue
         if (InputBox.dataset.inputtype == "distance") {
             InputValue = FeetToInches(InputBox.value)
@@ -132,29 +143,41 @@ function ShowAndReturnPerformMetricsRankings() {
 
         const levels = Object.keys(ExerciseData)
 
+        let IsReversed = false
+        let EliteRank = {RANK: "Elite"}
+
+        if (InputBox.dataset.shortname == "20m") {
+            IsReversed = true
+            EliteRank.PERCENT = GetPercentage(InputValue, 0, ExerciseData.Advanced.min, true)
+        } else {
+            EliteRank.PERCENT = GetPercentage(InputValue, ExerciseData.Elite.min, ExerciseData.Elite.max, IsReversed)
+            if (InputValue < ExerciseData.Novice.min) {
+                ExercisesAndRanks[InputBox.dataset.shortname] = {RANK: "Beginner", PERCENT: GetPercentage(InputValue, 0, ExerciseData.Novice.min)}
+                return
+            }
+        }
+
         for (let i = 0; i < levels.length; i++) {
             const level = levels[i]
             const min = ExerciseData[level].min
             const max = ExerciseData[level].max
             if (InputValue >= min && InputValue <= max) {
-                ShowExerciseRank(InputBox.dataset.shortname, level)
+                ExercisesAndRanks[InputBox.dataset.shortname] = {RANK: level, PERCENT: GetPercentage(InputValue, min, max, IsReversed)}
                 return
             }
         }
-        ShowExerciseRank(InputBox.dataset.shortname, "Elite")
+
+        ExercisesAndRanks[InputBox.dataset.shortname] = EliteRank
     })
+    return ExercisesAndRanks
 }
 
-function GetNeedleRotation(RANK, SCORE, RANKNUMBER) {
-    // Move Everything so min is zero for percentage math
-    const MovedMax = RANK.max - RANK.min
-    const MovedScore = SCORE - RANK.min
-
-    const ScorePercentage = MovedScore / MovedMax
-
-    const Rotation = (ANGLE * RANKNUMBER) + ANGLE * ScorePercentage
-
-    return Math.max(Math.min(Rotation, 180), 0)
+function GetPercentage(Score, Min, Max, Reversed=false) {
+    if (Reversed) {
+        return (Max - Score) / (Max - Min)
+    } else {
+        return (Score - Min) / (Max - Min)
+    }
 }
 
 function CalculateOneRM() {
@@ -171,24 +194,6 @@ function CalculateOneRM() {
     }
 }
 
-function IsBeginner(ExerciseType, Novice, AgeMultiplier) {
-    let Comparer
-    let MINmin
-    if (ExerciseType == "Weight") {
-        Comparer = OneRM
-        const Weight = Number(WeightInput.value)
-        MINmin = Math.round(Novice.min * Weight * AgeMultiplier)
-    } else {
-        Comparer = Number(RepsInput.value)
-        MINmin = Math.round(Novice.min * AgeMultiplier)
-    }
-
-    if (Comparer < MINmin) {
-        return true
-    }
-    return false
-}
-
 function GetAgeMultiplier() {
     const Length = AGEMULTIPLERS.length
     const Age = Number(AgeInput.value)
@@ -200,7 +205,7 @@ function GetAgeMultiplier() {
     return 1
 }
 
-function ShowExerciseRank(Name, Rank) {
+function ShowPerformMetricsExerciseRank(Name, Rank) {
     const Cloned = RankTemplate.content.cloneNode(true)
     
     const NameText = Cloned.children[1].children[0]
