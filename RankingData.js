@@ -34,6 +34,12 @@ export const ONERMEXERCISEINFO = {
                 Intermediate: {min: 1.9, max: 2.4},
                 Advanced: {min: 2.4, max: 3.1},
                 Elite: {min: 3.1, max: 4.5}
+            },
+            HipThrust: {
+                Novice: {min: 0.75, max: 1.0},
+                Intermediate: {min: 1.0, max: 1.5},
+                Advanced: {min: 1.5, max: 2.0},
+                Elite: {min: 2.0, max: 2.5}
             }
         },
         Bodyweight: {
@@ -82,6 +88,12 @@ export const ONERMEXERCISEINFO = {
                 Intermediate: {min: 1.4, max: 1.8},
                 Advanced: {min: 1.8, max: 2.3},
                 Elite: {min: 2.3, max: 3.1}
+            },
+            HipThrust: {
+                Novice: {min: 0.5, max: 0.75},
+                Intermediate: {min: 0.75, max: 1.25},
+                Advanced: {min: 1.25, max: 1.75},
+                Elite: {min: 1.75, max: 2.25}
             }
         },
         Bodyweight: {
