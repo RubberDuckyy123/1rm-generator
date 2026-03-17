@@ -123,16 +123,16 @@ export const ONERMEXERCISEINFO = {
 export const PERFORMMETRICSINFO = {
     Male: {
         BroadJump: {
-            Novice: {min: 64, max: 74},
-            Intermediate: {min: 74, max: 86},
-            Advanced: {min: 86, max: 99},
+            Novice: {min: 65, max: 74},
+            Intermediate: {min: 74, max: 89},
+            Advanced: {min: 89, max: 99},
             Elite: {min: 99, max: 123}
         },
         VerticalJump: {
-            Novice: {min: 13, max: 15},
-            Intermediate: {min: 15, max: 19},
-            Advanced: {min: 19, max: 27},
-            Elite: {min: 27, max: 41}
+            Novice: {min: 16, max: 20},
+            Intermediate: {min: 20, max: 24},
+            Advanced: {min: 24, max: 28},
+            Elite: {min: 28, max: 41}
         },
         MedicineBallChestThrow: {
             Novice: {min: 90, max: 137},
@@ -149,16 +149,16 @@ export const PERFORMMETRICSINFO = {
     },
     Female: {
         BroadJump: {
-            Novice: {min: 44, max: 54},
-            Intermediate: {min: 54, max: 65},
-            Advanced: {min: 65, max: 77},
-            Elite: {min: 77, max: 101}
+            Novice: {min: 53, max: 62},
+            Intermediate: {min: 62, max: 72},
+            Advanced: {min: 72, max: 84},
+            Elite: {min: 84, max: 101}
         },
         VerticalJump: {
-            Novice: {min: 7, max: 8},
-            Intermediate: {min: 8, max: 14},
-            Advanced: {min: 14, max: 18},
-            Elite: {min: 18, max: 32}
+            Novice: {min: 12, max: 16},
+            Intermediate: {min: 16, max: 20},
+            Advanced: {min: 20, max: 24},
+            Elite: {min: 24, max: 32}
         },
         MedicineBallChestThrow: {
             Novice: {min: 69, max: 81},
