@@ -70,7 +70,7 @@ function EvalOneRM() {
     SetupOneRMVisual()
 
     const ANGLE = 180 / Object.keys(RANKCOLORS).length
-    const NeedleRotation = Math.max(Math.min((ANGLE * RANKING.RankNumber) + ANGLE * GetPercentage(RANKING.Score, RANKING.Info.min, RANKING.Info.max), 180), 0)
+    const NeedleRotation = (ANGLE * RANKING.RankNumber) + ANGLE * GetPercentage(RANKING.Score, RANKING.Info.min, RANKING.Info.max)
 
     document.getElementById("GasMeter").classList.remove("NotRendered")
 
@@ -222,16 +222,19 @@ function ShowPerformMetricsExerciseRank(Name, Rank) {
 }
 
 function FeetToInches(input) {
-    const parts = input.trim().split(/['"]/).filter(p => p !== "");
+    const parts = input.trim().split(/['"]/)
 
     let feet = 0;
     let inches = 0;
 
     if (parts.length === 2) {
-        feet = Number(parts[0]);
-        inches = parts[1]
-        const ActualInches = inches.slice(0, 1) + "." + inches.slice(1)
-        inches = Number(ActualInches);
+        if (parts[1] == "") {
+            inches = parts[0]
+        } else {
+            feet = Number(parts[0]);
+            inches = parts[1]
+            inches = Number(ActualInches);
+        }
     } 
     else if (parts.length === 1) {
         inches = Number(parts[0]) * 12;
