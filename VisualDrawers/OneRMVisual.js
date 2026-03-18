@@ -12,13 +12,46 @@ const RANKS = Object.keys(RANKCOLORS)
 
 const ANGLE = 180 / RANKS.length
 
+const TWEENLENGTH = 1.0
+let TweenTime = 0.0
+let Progress = 0.0
+let lastTime = 0.0
+let NeedlePos = 0
+let StartNeedlePos = -90
+let TargetNeedlePos = 0
+
+const NEEDLEWIDTH = 20
+const NEEDLEHEIGHT = 100
+const NEEDLEBORDERWIDTH = 5
+
 ctx.font = "14px Arial"
 
-export function ResetOneRMVisual() {
+export function DrawOneRMVisual(Rotation) {
     ctx.clearRect(0, 0, WIDTH, HEIGHT)
+    const ProperRotation = -90 + Rotation
+
+    DrawGasMeter()
+    DrawGasNeedle(-90)
+
+    TargetNeedlePos = ProperRotation
+    TweenTime = 0.0
+    Progress = 0.0
+
+    const observer = new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting) {
+            lastTime = performance.now()
+            requestAnimationFrame(UpdateNeedlePos)
+            observer.disconnect()
+        }
+    },
+    {
+        threshold: 0.67
+    })
+
+    observer.observe(Canvas)
 }
 
-export function SetupOneRMVisual() {
+function DrawGasMeter() {
     ctx.fillStyle = "black"
 
     // Draws The Background Semi-Circle
@@ -63,26 +96,26 @@ export function SetupOneRMVisual() {
     }
 }
 
-export function FinishOneRMVisual(Rotation, Width = 20, Height = 100, BorderWidth = 5) {
+function DrawGasNeedle(Rotation) {
     ctx.fillStyle = "white"
 
     ctx.save()
 
     ctx.translate(CENTER_X, HEIGHT)
-    ctx.rotate(deg_to_rad(-90 + Rotation))
+    ctx.rotate(Rotation)
 
     // Needle Base Outline
     ctx.beginPath()
     ctx.moveTo(0, 0)
-    ctx.arc(0, 0, Width / 2 + BorderWidth, 0, Math.PI * 2)
+    ctx.arc(0, 0, NEEDLEWIDTH / 2 + NEEDLEBORDERWIDTH, 0, Math.PI * 2)
     ctx.closePath()
     ctx.fill()
 
     // Needle Point Outline
     ctx.beginPath()
-    ctx.moveTo(-Width / 2 - BorderWidth, 0)
-    ctx.lineTo(0, -Height - BorderWidth)
-    ctx.lineTo(Width / 2 + BorderWidth, 0)
+    ctx.moveTo(-NEEDLEWIDTH / 2 - NEEDLEBORDERWIDTH, 0)
+    ctx.lineTo(0, -NEEDLEHEIGHT - NEEDLEBORDERWIDTH)
+    ctx.lineTo(NEEDLEWIDTH / 2 + NEEDLEBORDERWIDTH, 0)
     ctx.closePath()
     ctx.fill()
 
@@ -91,21 +124,46 @@ export function FinishOneRMVisual(Rotation, Width = 20, Height = 100, BorderWidt
     // Needle Base (the circle part)
     ctx.beginPath()
     ctx.moveTo(0, 0)
-    ctx.arc(0, 0, Width / 2, 0, Math.PI * 2)
+    ctx.arc(0, 0, NEEDLEWIDTH / 2, 0, Math.PI * 2)
     ctx.closePath()
     ctx.fill()
 
     // Needle Point (the triangle part)
     ctx.beginPath()
-    ctx.moveTo(-Width / 2, 0)
-    ctx.lineTo(0, -Height)
-    ctx.lineTo(Width / 2, 0)
+    ctx.moveTo(-NEEDLEWIDTH / 2, 0)
+    ctx.lineTo(0, -NEEDLEHEIGHT)
+    ctx.lineTo(NEEDLEWIDTH / 2, 0)
     ctx.closePath()
     ctx.fill()
 
     ctx.restore()
 }
 
+function UpdateNeedlePos(time) {
+    const deltaTime = (time - lastTime) / 1000
+    lastTime = time
+
+    TweenTime += deltaTime
+    Progress = TweenTime / TWEENLENGTH
+    NeedlePos = StartNeedlePos + (TargetNeedlePos - StartNeedlePos) * easeOut(Progress, 2)
+
+    ctx.clearRect(0, 0, WIDTH, HEIGHT)
+    DrawGasMeter()
+    DrawGasNeedle(deg_to_rad(NeedlePos))
+
+    if (Progress < 1) {
+        requestAnimationFrame(UpdateNeedlePos)
+    } else {
+        ctx.clearRect(0, 0, WIDTH, HEIGHT)
+        DrawGasMeter()
+        DrawGasNeedle(deg_to_rad(TargetNeedlePos))
+    }
+}
+
 function deg_to_rad(degrees) {
     return degrees * (Math.PI / 180)
+}
+
+function easeOut(Progress, power) {
+    return 1 - Math.pow(1 - Progress, power)
 }
