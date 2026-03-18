@@ -1,5 +1,5 @@
 import { AGEMULTIPLERS, ONERMEXERCISEINFO, PERFORMMETRICSINFO, RANKCOLORS } from "./RankingData.js"
-import { ResetOneRMVisual, SetupOneRMVisual, FinishOneRMVisual } from "./VisualDrawers/OneRMVisual.js"
+import { DrawOneRMVisual } from "./VisualDrawers/OneRMVisual.js"
 import { ResetPerformMetricsVisual, SetupPerformMetricsVisual, FinishPerformMetricsVisual } from "./VisualDrawers/PerformMetricsVisual.js"
 
 const OneRMGenderSelect = document.getElementById("OneRMGenderSelect")
@@ -66,15 +66,12 @@ function EvalOneRM() {
     RankingResultText.textContent = RANKING.Name
     RankingResultText.style.color = RANKCOLORS[RANKING.Name]
 
-    ResetOneRMVisual()
-    SetupOneRMVisual()
-
     const ANGLE = 180 / Object.keys(RANKCOLORS).length
     const NeedleRotation = Math.max(Math.min((ANGLE * RANKING.RankNumber) + ANGLE * GetPercentage(RANKING.Score, RANKING.Info.min, RANKING.Info.max), 180), 0)
 
     document.getElementById("GasMeter").classList.remove("NotRendered")
 
-    FinishOneRMVisual(NeedleRotation)
+    DrawOneRMVisual(NeedleRotation)
 }
 
 function EvalPerformMetrics() {
