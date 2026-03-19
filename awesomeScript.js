@@ -229,8 +229,7 @@ function FeetToInches(input) {
             inches = parts[0]
         } else {
             feet = Number(parts[0]);
-            inches = parts[1]
-            inches = Number(ActualInches);
+            inches = Number(parts[1])
         }
     } 
     else if (parts.length === 1) {
