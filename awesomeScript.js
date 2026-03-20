@@ -1,6 +1,6 @@
 import { AGEMULTIPLERS, ONERMEXERCISEINFO, PERFORMMETRICSINFO, RANKCOLORS } from "./RankingData.js"
 import { DrawOneRMVisual } from "./VisualDrawers/OneRMVisual.js"
-import { ResetPerformMetricsVisual, SetupPerformMetricsVisual, FinishPerformMetricsVisual } from "./VisualDrawers/PerformMetricsVisual.js"
+import { DrawPerformMetricsVisual } from "./VisualDrawers/PerformMetricsVisual.js"
 
 const OneRMGenderSelect = document.getElementById("OneRMGenderSelect")
 const MetricsGenderSelect = document.getElementById("MetricsGenderSelect")
@@ -75,9 +75,6 @@ function EvalOneRM() {
 }
 
 function EvalPerformMetrics() {
-    ResetPerformMetricsVisual()
-    SetupPerformMetricsVisual()
-
     const RANKINGS = ShowAndReturnPerformMetricsRankings()
     const Names = Object.keys(RANKINGS)
     for (let i = 0; i < Names.length; i++) {
@@ -86,7 +83,7 @@ function EvalPerformMetrics() {
 
     document.getElementById("BarGraph").classList.remove("NotRendered")
 
-    FinishPerformMetricsVisual(RANKINGS)
+    DrawPerformMetricsVisual(RANKINGS)
 }
 
 function ShowAndReturnOneRMRanking() {
