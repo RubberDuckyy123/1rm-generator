@@ -147,6 +147,10 @@ function ShowAndReturnPerformMetricsRankings() {
         if (InputBox.dataset.shortname == "20m") {
             IsReversed = true
             EliteRank.PERCENT = GetPercentage(InputValue, 0, ExerciseData.Advanced.min, true)
+            if (InputValue > ExerciseData.Beginner.max) {
+                ExercisesAndRanks[InputBox.dataset.shortname] = {RANK: "Beginner", PERCENT: 0}
+                return
+            }
         } else {
             EliteRank.PERCENT = GetPercentage(InputValue, ExerciseData.Elite.min, ExerciseData.Elite.max, IsReversed)
             if (InputValue < ExerciseData.Novice.min) {
