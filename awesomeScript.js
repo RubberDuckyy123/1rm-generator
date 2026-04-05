@@ -226,9 +226,9 @@ function FeetToInches(input) {
     let inches = 0;
 
     if (parts.length === 2) {
-        if (parts[1] == "") {
-            inches = parts[0]
-        } else {
+        if (parts[1] == "") { // Typed inches'
+            inches = Number(parts[0])
+        } else { // Typed ft'inches
             feet = Number(parts[0]);
             inches = Number(parts[1])
         }
