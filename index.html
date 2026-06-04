@@ -17,6 +17,7 @@
         <div id="MenuOptions">
             <button data-menu="OneRMGenerator" class="MenuSwitcher MenuOption">1RM Generator</button>
             <button data-menu="PerformanceMetrics" class="MenuSwitcher MenuOption">Performance Metrics</button>
+            <button data-menu="VMax" class="MenuSwitcher MenuOption">Vo2 Max</button>
         </div>
 
         <div id="OneRMGenerator" class="Menu NotRendered">
@@ -29,27 +30,27 @@
                         <option>Female</option>
                     </select>
                 </div>
-                <div class="MainInfoContainer">
+                <div class="GridContainer">
                     <div class="WorkoutInfo">
                         <h2 class="WorkoutLabel">AGE:</h2>
-                        <input id="AgeInput" class="WorkoutInput" type="number">
+                        <input id="OneRMAgeInput" class="WorkoutInput" type="number">
                     </div>
                     <div class="WorkoutInfo">
                         <h2 class="WorkoutLabel">WEIGHT:</h2>
-                        <input id="WeightInput" class="WorkoutInput" type="number">
+                        <input id="OneRMWeightInput" class="WorkoutInput" type="number">
                     </div>
                     <div class="WorkoutInfo">
                         <h2 class="WorkoutLabel">LOAD:</h2>
-                        <input id="LoadInput" class="WorkoutInput" type="number">
+                        <input id="OneRMLoadInput" class="WorkoutInput" type="number">
                     </div>
                     <div class="WorkoutInfo">
                         <h2 class="WorkoutLabel">REPS:</h2>
-                        <input id="RepsInput" class="WorkoutInput" type="number">
+                        <input id="OneRMRepsInput" class="WorkoutInput" type="number">
                     </div>
                 </div>
                 <div class="WorkoutInfo">
                     <h2 class="WorkoutLabel">EXERCISE:</h2>
-                    <select class="WorkoutDropdown" id="ExerciseSelect">
+                    <select class="WorkoutDropdown" id="OneRMExerciseSelect">
                         <option data-type="Weight">Bench Press</option>
                         <option data-type="Weight">Deadlift</option>
                         <option data-type="Weight">Squat</option>
@@ -63,20 +64,23 @@
             </div>
             <div id="MeasureUnitContainer">
                 <h2>Measurement Unit:</h2>
-                <select id="UnitSelect">
+                <select id="OneRMUnitSelect">
                     <option>lbs</option>
                     <option>kgs</option>
                 </select>
             </div>
             <button class="CalculateButton" id="OneRMCalculateButton">CALCULATE</button>
-            <h3 class="BuildUpText" id="ScoreBuildup"></h3>
+            <h3 class="BuildUpText" id="OneRMScoreBuildup"></h3>
             <h1 class="Result" id="OneRMResult"></h1>
-            <h3 class="BuildUpText" id="RankBuildup"></h3>
-            <h1 class="Result" id="RankingResult"></h1>
+            <h3 class="BuildUpText" id="OneRMRankBuildup"></h3>
+            <h1 class="Result BlackOutline" id="OneRMRankingResult"></h1>
 
             <canvas id="GasMeter" class="Visual NotRendered" width="250" height="125"></canvas>
 
-            <button class="MenuSwitcher MenuReverse" data-menu="PerformanceMetrics" id="SwitchToPerformanceMetrics">Performance Metrics</button>
+            <div class="GridContainer" style="margin-bottom: 30px;">
+                <button class="MenuSwitcher MenuSwap" data-menu="PerformanceMetrics">Performance Metrics</button>
+                <button class="MenuSwitcher MenuSwap" data-menu="VMax">Vo2 Max</button>
+            </div>
         </div>
 
         <div id="PerformanceMetrics" class="Menu NotRendered">
@@ -117,7 +121,50 @@
 
             <canvas id="BarGraph" class="Visual NotRendered" width="300" height="200" style="margin-top: 25px;"></canvas>
 
-            <button class="MenuSwitcher MenuReverse" data-menu="OneRMGenerator" id="SwitchToOneRM">1RM Generator</button>
+            <div class="GridContainer" style="margin-bottom: 30px;">
+                <button class="MenuSwitcher MenuSwap" data-menu="OneRMGenerator">1RM Generator</button>
+                <button class="MenuSwitcher MenuSwap" data-menu="VMax">Vo2 Max</button>
+            </div>
+        </div>
+
+        <div id="VMax" class="Menu NotRendered">
+            <h1 id="Vo2MaxTitle" class="TitleText">Vo2 Max</h1>
+            <div class="CardContainer">
+                <div class="MainInfoContainer">
+                    <div class="WorkoutInfo">
+                        <h2 class="WorkoutLabel">GENDER:</h2>
+                        <select id="VMaxGenderSelect" class="WorkoutDropdown" style="width: 100%; height: 50px; --font-size: 1.5rem">
+                            <option>Male</option>
+                            <option>Female</option>
+                        </select>
+                    </div>
+                    <div class="WorkoutInfo">
+                        <h2 class="WorkoutLabel">AGE:</h2>
+                        <input id="VMaxAgeInput" class="WorkoutInput" type="number">
+                    </div>
+                    <div class="WorkoutInfo">
+                        <h2 class="WorkoutLabel">TYPE:</h2>
+                        <select id="VMaxExerciseType" class="WorkoutDropdown" style="width: 100%; height: 50px; --font-size: 1.4rem">
+                            <option>Distance</option>
+                            <option>Timed</option>
+                        </select>
+                    </div>
+                    <div class="WorkoutInfo">
+                        <h2 class="WorkoutLabel">SCORE:</h2>
+                        <input id="VMaxScoreInput" class="WorkoutInput" placeholder="Minutes">
+                    </div>
+                </div>
+            </div>
+            <button class="CalculateButton" id="VMaxCalculateButton">CALCULATE</button>
+            <h3 class="BuildUpText" id="VMaxScoreBuildup"></h3>
+            <h1 class="Result" id="VMaxResult"></h1>
+            <h3 class="BuildUpText" id="VMaxRankBuildup"></h3>
+            <h1 class="Result BlackOutline" id="VMaxRankingResult"></h1>
+
+            <div class="GridContainer" style="margin-bottom: 30px;">
+                <button class="MenuSwitcher MenuSwap" data-menu="OneRMGenerator">1RM Generator</button>
+                <button class="MenuSwitcher MenuSwap" data-menu="PerformanceMetrics">Performance Metrics</button>
+            </div>
         </div>
 
         <img id="Logo" src="Logo.png" alt="Creators Logo">
