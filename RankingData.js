@@ -1,4 +1,4 @@
-export const AGEMULTIPLERS = [
+export const ONERMAGEMULTIPLERS = [
     {min: 0, max: 17, percent: 0.85},
     {min: 18, max: 29, percent: 1.0},
     {min: 30, max: 39, percent: 0.97},
@@ -175,6 +175,77 @@ export const PERFORMMETRICSINFO = {
     }
 }
 
+export const VO2MAXINFO = {
+    Male: {
+        Superior: [
+            55.4,
+            54.0,
+            52.5,
+            48.9,
+            45.7,
+            42.1
+        ],
+        Excellent: [
+            51.1,
+            48.3,
+            46.4,
+            43.4,
+            39.5,
+            36.7
+        ],
+        Good: [
+            45.4,
+            44.0,
+            42.4,
+            39.2,
+            35.5,
+            32.3
+        ],
+        Fair: [
+            41.7, // Multipliers are listed by age group, from 20-29 all the way to 70-79
+            40.5,
+            38.5,
+            35.6,
+            32.3,
+            29.4
+        ]
+    },
+    Female: {
+        Superior: [
+            49.6,
+            47.4,
+            45.3,
+            41.1,
+            37.8,
+            36.7
+        ],
+        Excellent: [
+            43.9,
+            42.4,
+            39.7,
+            36.7,
+            33.0,
+            30.9
+        ],
+        Good: [
+            39.5,
+            37.8,
+            36.3,
+            33.0,
+            30.0,
+            28.1
+        ],
+        Fair: [
+            36.1,
+            34.4,
+            33.0,
+            30.1,
+            27.5,
+            25.9
+        ]
+    }
+}
+
 export const RANKCOLORS = {
     Beginner: "#009eff",
     Novice: "blue",
@@ -182,3 +253,4 @@ export const RANKCOLORS = {
     Advanced: "orange",
     Elite: "red"
 }
+
