@@ -36,12 +36,18 @@ body {
     background-color: #b6b6b6;
 }
 
-.MainInfoContainer {
+.GridContainer {
     display: grid;
     column-gap: 5vw;
     row-gap: 2.5vw;
     grid-template-columns: 1fr 1fr;
     width: 100%;
+}
+
+.HorizantalContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 25px;
 }
 
 .WorkoutInfo {
@@ -68,10 +74,11 @@ body {
 
 .WorkoutDropdown {
     width: 60%;
-    font-size: 1.35rem;
+    height: 40px;
+    font-size: var(--font-size, 1.35rem);
     text-align: center;
     border-width: 3px;
-    border-radius: 10px;
+    border-radius: 15px;
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -143,14 +150,6 @@ body {
     font-weight: 400;
 }
 
-#RankingResult {
-    text-shadow:
-        -3px -3px 0 black,
-        3px -3px 0 black,
-        -3px  3px 0 black,
-        3px  3px 0 rgb(0, 0, 0);
-}
-
 #OneRMResult {
     margin-bottom: 30px;
 }
@@ -191,7 +190,7 @@ body {
     display: flex;
     position: absolute;
     flex-direction: column;
-    gap: 15%;
+    gap: 80px;
     width: 100vw;
     height: 100vh;
     left: 50%;
@@ -203,6 +202,7 @@ body {
 
 .MenuOption {
     width: 70vw;
+    max-width: 375px;
     aspect-ratio: 2/1;
     background-color: #b6b6b6;
     border: 10px solid black;
@@ -222,9 +222,9 @@ body {
     margin-top: auto;
 }
 
-.MenuReverse {
-    width: 50vw;
-    aspect-ratio: 4/1;
+.MenuSwap {
+    width: 40vw;
+    aspect-ratio: 2.5/1;
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -242,4 +242,16 @@ body {
     margin-left: auto;
     margin-right: auto;
     height: auto;
+}
+
+.BlackOutline {
+    text-shadow:
+        -3px -3px 0 black,
+        3px -3px 0 black,
+        -3px  3px 0 black,
+        3px  3px 0 black,
+        3px 0px 0 black,
+        -3px 0px 0 black,
+        0px 3px 0 black,
+        0px -3px 0 black;
 }
