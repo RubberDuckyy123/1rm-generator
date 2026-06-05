@@ -211,7 +211,7 @@ const VMaxComponents = {
         if (Score == "") {
             VMax = 0
         } else {
-            if (VMaxComponents.exerciseType.selectedOptions[0].value == "Timed") {
+            if (VMaxComponents.exerciseType.selectedOptions[0].value == "12 Min") {
                 VMax = 35.97 * Score - 11.29
             } else {
                 VMax = 483 / Score + 3.5
