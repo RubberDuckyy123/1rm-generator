@@ -1,4 +1,4 @@
-const CACHE_NAME = "one-rm-v8.02";
+const CACHE_NAME = "one-rm-v8.03";
 
 const FILES_TO_CACHE = [
   "/1rm-generator/",
