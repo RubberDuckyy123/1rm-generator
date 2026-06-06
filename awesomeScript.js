@@ -245,7 +245,7 @@ const VMaxComponents = {
     },
     Init() {
         VMaxComponents.exerciseType.addEventListener("input", () => {
-            if (VMaxComponents.exerciseType.selectedOptions[0].value == "Timed") {
+            if (VMaxComponents.exerciseType.selectedOptions[0].value == "12 Min") {
                 VMaxComponents.scoreInput.setAttribute("placeholder", "Miles")
             } else {
                 VMaxComponents.scoreInput.setAttribute("placeholder", "Minutes")
